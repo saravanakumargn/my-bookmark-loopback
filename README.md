@@ -37,3 +37,9 @@ http://localhost:3000/api/BmLabels?filter={"where":{"publisherId":"593a118595f9d
 
 
 {"email":"bob@projects.com","password":"opensesame"}
+
+
+
+>git commit -am "make it better"
+
+>git push heroku master

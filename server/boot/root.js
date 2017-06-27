@@ -16,47 +16,47 @@ module.exports = function (server) {
   // function(req, res, next) {   // console.log(req)   // if(tokenId) {   //
   // res.header('Authorization', tokenId);   // } console.log('----all-----') //
   // console.log(res.locals.isAccessable) next(); });
-  // router.use(function (req, res, next) {
-  //   // if(tokenId) {   res.header('Authorization', tokenId); } console.log(req)
-  //   // console.log('-----use----') console.log(res.locals.isAccessable) next();
-  //   AccessToken
-  //     .findById(req.signedCookies.authorization, function (err, accessResult) {
-  //       if (err) {
-  //         console.log('err:')
-  //         // next(); return next(err);
-  //       }
-  //       // console.log(req) console.log('---AccessToken------')
-  //       if (!accessResult) {
-  //         // console.log('no user:')
-  //         res.locals.isAccessable = false;
-  //         next();
-  //       } else {
-  //         // console.log(user)  console.log('valid user:')
-  //         User.findById(accessResult.userId, (err, userResult) => {
-  //           if (err) {
-  //             console.log('err:')
-  //             next();
-  //             // return next(err);
-  //           }
-  //           // console.log('---User------') console.log(userResult)
-  //           res.locals.user = userResult;
-  //           res.locals.isAccessable = true;
-  //           next();
+  router.use(function (req, res, next) {
+    // if(tokenId) {   res.header('Authorization', tokenId); } console.log(req)
+    // console.log('-----use----') console.log(res.locals.isAccessable) next();
+    AccessToken
+      .findById(req.signedCookies.authorization, function (err, accessResult) {
+        if (err) {
+          console.log('err:')
+          // next(); return next(err);
+        }
+        // console.log(req) console.log('---AccessToken------')
+        if (!accessResult) {
+          // console.log('no user:')
+          res.locals.isAccessable = false;
+          next();
+        } else {
+          // console.log(user)  console.log('valid user:')
+          User.findById(accessResult.userId, (err, userResult) => {
+            if (err) {
+              console.log('err:')
+              next();
+              // return next(err);
+            }
+            // console.log('---User------') console.log(userResult)
+            res.locals.user = userResult;
+            res.locals.isAccessable = true;
+            next();
 
-  //         });
-  //         // res.locals.isAccessable = true;      next();
-  //       }
-  //     });
+          });
+          // res.locals.isAccessable = true;      next();
+        }
+      });
 
-  //   // if (req.signedCookies) { //  User.findById(req.signedCookies.userId,
-  //   // function(err, user) { //         if (err) { //             return next(err);
-  //   // //         } //         // if (!user) { //         //     return next(new
-  //   // Error('No user with this access token was found.')); //         // } //
-  //   //   // var loopbackContext = loopback.getCurrentContext(); //         // if
-  //   // (loopbackContext) { //         //     req.accessToken.currentUser = user; //
-  //   //        //     loopbackContext.set('currentUser', user); //         // } //
-  //   //      next(); //     }); } next();
-  // });
+    // if (req.signedCookies) { //  User.findById(req.signedCookies.userId,
+    // function(err, user) { //         if (err) { //             return next(err);
+    // //         } //         // if (!user) { //         //     return next(new
+    // Error('No user with this access token was found.')); //         // } //
+    //   // var loopbackContext = loopback.getCurrentContext(); //         // if
+    // (loopbackContext) { //         //     req.accessToken.currentUser = user; //
+    //        //     loopbackContext.set('currentUser', user); //         // } //
+    //      next(); //     }); } next();
+  });
 
   // function isValidUser(userId) {   let isValidUser; }
   // router.use(cookieSession({   name: 'session',   keys: ['key1', 'key2'],   //
