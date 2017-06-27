@@ -63,8 +63,7 @@ module.exports = function (server) {
   // Cookie Options   maxAge: 24 * 60 * 60 * 1000 // 24 hours }))
 
   router.get('/', function (req, res) {
-    // res.render('pages/home');
-    res.send('Hello World!!')
+    res.render('pages/home');
   });
 
   router.get('/bookmark', function (req, res) {
