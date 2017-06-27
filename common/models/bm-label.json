@@ -1,0 +1,57 @@
+{
+  "name": "BmLabel",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "labelName": {
+      "type": "string",
+      "required": true
+    },
+    "labelColor": {
+      "type": "string",
+      "default": "FFFF00"
+    }
+  },
+  "scope": {
+    "order": "labelName"
+  },  
+  "validations": [],
+  "relations": {
+    "bmuser": {
+      "type": "belongsTo",
+      "model": "BmUser",
+      "foreignKey": "bmUserId"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "create"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW"
+    }
+  ],
+  "methods": {}
+}

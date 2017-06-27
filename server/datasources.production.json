@@ -1,0 +1,9 @@
+{
+  "mongoDs": {
+    "host": "ds137882.mlab.com",
+    "port": 37882,
+    "database": "my-bookmark",
+    "username": "my-bm-db",
+    "password": "my-bm-db-PAsS1!"
+  }
+}

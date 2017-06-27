@@ -1,0 +1,26 @@
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded mb-5">
+<div class="container">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="/">Bookmark</a>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/bookmark">Bookmark App</a>
+      </li>      
+      <li class="nav-item active">
+      {% if isAccessable %}
+        <a class="nav-link" href="/logout">Log out</a>
+      {% else %}
+        <a class="nav-link" href="/login">Login</a>
+      {% endif %}
+      </li>            
+    </ul>
+  </div>
+  </div>
+</nav>

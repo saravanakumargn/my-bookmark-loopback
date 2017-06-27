@@ -1,0 +1,59 @@
+{
+  "name": "BmItem",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "itemTitle": {
+      "type": "string"
+    },
+    "itemDesc": {
+      "type": "string",
+      "required": true
+    },
+    "itemCreatedOn": {
+      "type": "date",
+      "required": true
+    },
+    "itemModifiedOn": {
+      "type": "date",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "bmuser": {
+      "type": "belongsTo",
+      "model": "BmUser",
+      "foreignKey": "bmUserId"
+    },
+    "bmLabels": {
+      "type": "hasAndBelongsToMany",
+      "model": "BmLabel",
+      "foreignKey": ""
+    }
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW"
+    }
+  ],
+  "methods": {}
+}

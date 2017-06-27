@@ -1,0 +1,31 @@
+{#<section>
+<div class="list-group">
+{% for item in labels %}
+  <a href="/bookmark/category/edit/{{ item.id }}" class="list-group-item list-group-item-action"><span class="badge" style="background-color:{{ item.labelColor }}">&nbsp;&nbsp;</span>&nbsp;&nbsp;{{ item.labelName }}</a>
+{% endfor %} 
+</div>
+</section>#}
+
+
+{% extends "partials/base.njk" %}
+{% block main %}
+<section>
+<h1>Categories</h1>
+<a class="btn btn-primary" role="button" href="/bookmark/category/new">New Category</a>
+<section>
+<div class="list-group">
+{% for item in labels %}
+  <a href="/bookmark/category/edit/{{ item.id }}" class="list-group-item list-group-item-action"><span class="badge" style="background-color:{{ item.labelColor }}">&nbsp;&nbsp;</span>&nbsp;&nbsp;{{ item.labelName }}</a>
+{% endfor %} 
+</div>
+</section>
+
+</section>
+{#<ul>
+{% for item in labels %}
+  <li><span class="badge badge-default">New</span> {{ item.labelName }}</li>
+{% else %}
+  <li>This would display if the 'item' collection were empty</li>
+{% endfor %}
+</ul>#}
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "partials/base.njk" %}
+{% block main %}
+<section>
+<h1>Bookmark App</h1>
+<a class="btn btn-primary" role="button" href="/bookmark/category">Manage Category</a>
+{{user.email}}
+{{email}} - {{accessToken}}
+
+
+{#<ul>
+{% for item in labels %}
+  <li><span class="badge badge-default">New</span> {{ item.labelName }}</li>
+{% else %}
+  <li>This would display if the 'item' collection were empty</li>
+{% endfor %}
+</ul>#}
+{% endblock %}
