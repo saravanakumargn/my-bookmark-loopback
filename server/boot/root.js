@@ -4,9 +4,7 @@ var cookieSession = require('cookie-session')
 
 module.exports = function (server) {
   // Install a `/` route that returns server status
-  var router = server
-    .loopback
-    .Router();
+  var router = server.loopback.Router();
   // router.get('/', server.loopback.status());
   var User = server.models.BmUser;
   var AccessToken = server.models.AccessToken;
@@ -22,7 +20,8 @@ module.exports = function (server) {
     AccessToken
       .findById(req.signedCookies.authorization, function (err, accessResult) {
         if (err) {
-          console.log('err:')
+          console.log('AccessToken.findById err:')
+          console.log(err)
           // next(); return next(err);
         }
         // console.log(req) console.log('---AccessToken------')
@@ -34,7 +33,8 @@ module.exports = function (server) {
           // console.log(user)  console.log('valid user:')
           User.findById(accessResult.userId, (err, userResult) => {
             if (err) {
-              console.log('err:')
+              console.log('User.findById err:')
+              console.log(err)
               next();
               // return next(err);
             }
@@ -51,11 +51,11 @@ module.exports = function (server) {
     // if (req.signedCookies) { //  User.findById(req.signedCookies.userId,
     // function(err, user) { //         if (err) { //             return next(err);
     // //         } //         // if (!user) { //         //     return next(new
-    // Error('No user with this access token was found.')); //         // } //
-    //   // var loopbackContext = loopback.getCurrentContext(); //         // if
+    // Error('No user with this access token was found.')); //         // } //   //
+    // var loopbackContext = loopback.getCurrentContext(); //         // if
     // (loopbackContext) { //         //     req.accessToken.currentUser = user; //
-    //        //     loopbackContext.set('currentUser', user); //         // } //
-    //      next(); //     }); } next();
+    //       //     loopbackContext.set('currentUser', user); //         // } //
+    //  next(); //     }); } next();
   });
 
   // function isValidUser(userId) {   let isValidUser; }
@@ -74,22 +74,16 @@ module.exports = function (server) {
       res.redirect('/login');
     } else {
       res.render('pages/bm-app/bm-main');
-      // console.log(res.locals.user);
-      // BmLabel.find({
-      //   where: {
-      //     bmUserId: res.locals.user.id
-      //   },
-      //   limit: 100
-      // }, function (err, labelResults) {
-      //   // console.log(labelResults);
-      //   res.render('pages/bm-app/bm-main', {labels: labelResults});
-      // });
+      // console.log(res.locals.user); BmLabel.find({   where: {     bmUserId:
+      // res.locals.user.id   },   limit: 100 }, function (err, labelResults) {   //
+      // console.log(labelResults);   res.render('pages/bm-app/bm-main', {labels:
+      // labelResults}); });
 
     }
-    //    AccessToken.findById(req.signedCookies.authorization, (err, user) => {
-    // if (err) {       console.log('err:')         // return next(err);     }
-    // if (!user) {       console.log('no user:')       res.redirect('/login');
-    // }     else {       console.log(user)        console.log('valid user:')
+    //    AccessToken.findById(req.signedCookies.authorization, (err, user) => { if
+    // (err) {       console.log('err:')         // return next(err);     } if
+    // (!user) {       console.log('no user:')       res.redirect('/login'); }
+    // else {       console.log(user)        console.log('valid user:')
     // res.render('pages/bm-app', { });     } });
   });
   router.get('/bookmark/category', function (req, res) {
@@ -107,7 +101,7 @@ module.exports = function (server) {
     res.render('pages/categories/categories-form');
   });
 
-  router.post('/bookmark/category/new', function (req, res,next) {
+  router.post('/bookmark/category/new', function (req, res, next) {
     console.log(req.body.ln)
     console.log(req.body.lc)
     BmLabel.create({
@@ -116,10 +110,11 @@ module.exports = function (server) {
       "bmUserId": res.locals.user.id
     }, function (err, labelResults) {
       // console.log(labelResults);
-        if (err) {
-          console.log(err)
-          return next(err);
-        }      
+      if (err) {
+        console.log('BmLabel.create err: ')
+        console.log(err)
+        return next(err);
+      }
       res.redirect('/bookmark/category');
     });
   });
@@ -132,14 +127,14 @@ module.exports = function (server) {
       BmLabel
         .findOne({
           where: {
-          and: [
-            {
-              bmUserId: res.locals.user.id
-            }, {
-              id: req.params.id
-            }
-          ]
-        }
+            and: [
+              {
+                bmUserId: res.locals.user.id
+              }, {
+                id: req.params.id
+              }
+            ]
+          }
         }, function (err, labelResult) {
           // console.log(labelResult);
           res.render('pages/categories/categories-form', {labels: labelResult});
@@ -152,17 +147,15 @@ module.exports = function (server) {
     } else {
       // console.log(res.locals.user);
       console.log('--')
-      BmLabel.upsertWithWhere(
-        {
-          and: [
-            {
-              bmUserId: res.locals.user.id
-            }, {
-              id: req.params.id
-            }
-          ]
-        }
-      , {
+      BmLabel.upsertWithWhere({
+        and: [
+          {
+            bmUserId: res.locals.user.id
+          }, {
+            id: req.params.id
+          }
+        ]
+      }, {
         "labelName": req.body.ln,
         "labelColor": req.body.lc
       }, function (err, labelResult) {
@@ -177,17 +170,16 @@ module.exports = function (server) {
     }
   });
   router.get('/bookmark/category/delete/:id', function (req, res, next) {
-      BmLabel.destroyAll(
-        {
-          and: [
-            {
-              bmUserId: res.locals.user.id
-            }, {
-              id: req.params.id
-            }
-          ]
-        }
-      ,function (err, labelResult) {
+    BmLabel
+      .destroyAll({
+        and: [
+          {
+            bmUserId: res.locals.user.id
+          }, {
+            id: req.params.id
+          }
+        ]
+      }, function (err, labelResult) {
         if (err) {
           console.log(err)
           return next(err);
